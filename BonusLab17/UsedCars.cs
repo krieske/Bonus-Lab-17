@@ -29,7 +29,7 @@ namespace BonusLab17
         public override void PrintInfo()
         {
             base.PrintInfo();
-            Console.WriteLine($"{CarMileage}");
+            Console.Write($"{CarMileage}");
         }
 
     }

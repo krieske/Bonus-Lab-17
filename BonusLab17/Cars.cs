@@ -56,7 +56,7 @@ namespace BonusLab17
 
         public virtual void PrintInfo()
         {
-            Console.WriteLine($"{CarMake}, {CarModel}, {CarYear}, {CarPrice} ");
+            Console.Write($"{CarMake}, {CarModel}, {CarYear}, {CarPrice} ");
         }
     }
 }

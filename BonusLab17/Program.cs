@@ -1,4 +1,4 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,44 +11,192 @@ namespace BonusLab17
         static void Main(string[] args)
         {
 
-            Cars car1 = new Cars("Car Make", "Car Model", 2018, 2000);
+            Cars car1 = new Cars("1) Car Make", "Car Model", 2018, 2000);
 
-            Cars car2 = new Cars("Car Make", "Car Model", 2000, 5000);
+            Cars car2 = new Cars("2) Car Make", "Car Model", 2000, 5000);
 
-            Cars car3 = new Cars("Car Make", "Car Model", 2005, 67000);
+            Cars car3 = new Cars("3) Car Make", "Car Model", 2005, 67000);
 
-            UsedCars car4 = new UsedCars("Car Make", "Car Model", 4013, 1080, 3000);
+            UsedCars car4 = new UsedCars("4) Car Make", "Car Model", 4013, 1080, 3000);
 
-            UsedCars car5 = new UsedCars("Car Make", "Car Model", 3200, 4000, 56000);
+            UsedCars car5 = new UsedCars("5) Car Make", "Car Model", 3200, 4000, 56000);
 
-            UsedCars car6 = new UsedCars("Car Make", "Car Model", 2064, 15000, 2034);
+            UsedCars car6 = new UsedCars("6) Car Make", "Car Model", 2064, 15000, 2034);
 
-            List<Cars> cars = new List<Cars>() {car1, car2, car3, car4, car5, car6 };
+            List<Cars> cars = new List<Cars>() { car1, car2, car3, car4, car5, car6 };
 
-
-
-            foreach (Cars car in cars)
+            string Continue = "y";
+            while (Continue == "y")
             {
-                car.PrintInfo();
-            }
+                // userinput for looking at cars goes HERE (if no = Continue = "n")
 
-            //string playAgain = "yes";
-
-            //while (playAgain == "yes")
-            //{
-            //    Console.WriteLine("Please pick a number to view more information on car.");
-            //    int userChoice = int.Parse(Console.ReadLine());
-
-
-            Console.WriteLine("tttttttttttttttttttttttttttttttttttt"); 
-                
-                cars.RemoveAt(0);
                 foreach (Cars car in cars)
                 {
                     car.PrintInfo();
+                    Console.WriteLine();
                 }
 
-           
+                // bool loopControl = LookAtCars();
+                //string buyCar = "no";
+
+                //Console.WriteLine("Would you like to look at some cars for purchase?");
+                //string 
+
+
+
+                //  while (loopControl)
+                //  { 
+                Console.WriteLine("Please pick a number to view more information on car.");
+                int userChoice = ValidateCarRange(cars);
+                Console.Clear();
+                cars[userChoice - 1].PrintInfo();
+                Console.WriteLine();
+
+                Console.WriteLine("Would you like to purchase this car?");
+                string userResponse = (Console.ReadLine());
+                userResponse= ValidatePurchaseCar(userResponse);
+
+
+
+                if (userResponse == "yes")
+                {
+                    cars.RemoveAt(userChoice - 1);
+
+                    foreach (Cars car in cars)
+                    {
+                        car.PrintInfo();
+                        Console.WriteLine();
+                    }
+
+                    Console.WriteLine("View more cars?");
+                    if (Console.ReadLine() == "yes")
+                    {
+                        Continue = "y";
+                    }
+                    else
+                    {
+                        Continue = "n";
+                    }
+                }
+
+                else
+                {
+                    Continue = "y";
+                }
+            }
+
+            Console.WriteLine("Thanks for shopping!");
+        }
+
+        public static string ValidatePurchaseCar(string userInput)
+        {
+            string x = "y";
+            while (x == "y")
+            {
+                if (userInput != "yes" && userInput != "no")
+                {
+                    x = "y";
+                }
+                else if (userInput == "yes")
+                {
+                    x = "n";
+                    return "yes";
+                }
+                else
+                {
+                    x = "n";
+                    return "no";
+
+                }
+            }
+            return "yes";
+        }
+
+        //public static bool LookAtCars()
+        //{
+        //    while (true)
+        //    {
+        //        Console.WriteLine("Would you like to look at some cars for purchase? (yes/no)");
+        //        string userInput = Console.ReadLine();
+
+        //        if (userInput == "no")
+        //        {
+        //            return false;
+        //        }
+        //        else if (userInput == "yes")
+        //        {
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("That is an invalid response.");
+        //        }
+        //    }
+        //}
+
+        public static int ValidateCarRange(List<Cars> c)
+        {
+            int min = 1;
+            int max = 6;
+
+            int num = ValidateCarNum();
+            while ((num > max) || (num < min))
+            {
+                Console.WriteLine($"Please pick a number between 1 and {c.Count}.");
+                num = ValidateCarNum();
+            }
+            return num;
+        }
+
+        public static int ValidateCarNum()
+        {
+            bool valid = false;
+            int num = 0;
+            while (!valid)
+            {
+                try
+                {
+
+                    num = int.Parse(Console.ReadLine());
+                    valid = true;
+                }
+                catch (FormatException f)
+                {
+                    Console.WriteLine("You did not enter a number.");
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error");
+
+                }
+            }
+            return num;
+        }
+
+        public static bool PurchaseCar()
+        {
+
+            while (true)
+            {
+                Console.WriteLine("Would you like to purchase this car?");
+                string userChoice = Console.ReadLine();
+
+                if (userChoice == "no")
+                {
+                    return false;
+                }
+                else if (userChoice == "yes")
+                {
+                    return false;
+                }
+                else
+                {
+                    Console.WriteLine("That is an invalid response.");
+                    return true;
+                }
+            }
+
         }
     }
 }
