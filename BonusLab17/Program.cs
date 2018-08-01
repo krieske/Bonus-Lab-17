@@ -11,17 +11,17 @@ namespace BonusLab17
         static void Main(string[] args)
         {
 
-            Cars car1 = new Cars("1) Car Make", "Car Model", 2018, 2000);
+            Cars car1 = new Cars("Car Make", "Car Model", 2018, 2000);
 
-            Cars car2 = new Cars("2) Car Make", "Car Model", 2000, 5000);
+            Cars car2 = new Cars("Car Make", "Car Model", 2000, 5000);
 
-            Cars car3 = new Cars("3) Car Make", "Car Model", 2005, 67000);
+            Cars car3 = new Cars("Car Make", "Car Model", 2005, 67000);
 
-            UsedCars car4 = new UsedCars("4) Car Make", "Car Model", 4013, 1080, 3000);
+            UsedCars car4 = new UsedCars("Car Make", "Car Model", 4013, 1080, 3000);
 
-            UsedCars car5 = new UsedCars("5) Car Make", "Car Model", 3200, 4000, 56000);
+            UsedCars car5 = new UsedCars("Car Make", "Car Model", 3200, 4000, 56000);
 
-            UsedCars car6 = new UsedCars("6) Car Make", "Car Model", 2064, 15000, 2034);
+            UsedCars car6 = new UsedCars("Car Make", "Car Model", 2064, 15000, 2034);
 
             List<Cars> cars = new List<Cars>() { car1, car2, car3, car4, car5, car6 };
 
@@ -53,8 +53,8 @@ namespace BonusLab17
                 Console.WriteLine();
 
                 Console.WriteLine("Would you like to purchase this car?");
-                string userResponse = (Console.ReadLine());
-                userResponse= ValidatePurchaseCar(userResponse);
+                string userResponse = PurchaseCar();
+
 
 
 
@@ -88,28 +88,52 @@ namespace BonusLab17
             Console.WriteLine("Thanks for shopping!");
         }
 
-        public static string ValidatePurchaseCar(string userInput)
+        public static string ValidatePurchaseCar()
         {
-            string x = "y";
-            while (x == "y")
+
+            bool valid = false;
+            string input = "";
+            while (!valid)
             {
-                if (userInput != "yes" && userInput != "no")
+                try
                 {
-                    x = "y";
+
+                    input = Console.ReadLine();
+                    valid = true;
                 }
-                else if (userInput == "yes")
+                catch (FormatException f)
                 {
-                    x = "n";
-                    return "yes";
+                    Console.WriteLine("You did not enter a valid response.");
+
                 }
-                else
+                catch (Exception e)
                 {
-                    x = "n";
-                    return "no";
+                    Console.WriteLine("Error");
 
                 }
             }
-            return "yes";
+            return input;
+
+            //string x = "y";
+            //while (x == "y")
+            //{
+            //    if (userInput != "yes" && userInput != "no")
+            //    {
+            //        x = "y";
+            //    }
+            //    else if (userInput == "yes")
+            //    {
+            //        x = "n";
+            //        return "yes";
+            //    }
+            //    else
+            //    {
+            //        x = "n";
+            //        return "no";
+
+            //    }
+            //}
+            //return "yes";
         }
 
         //public static bool LookAtCars()
@@ -174,28 +198,34 @@ namespace BonusLab17
             return num;
         }
 
-        public static bool PurchaseCar()
+        public static string PurchaseCar()
         {
+                string input = Console.ReadLine().ToLower();
 
-            while (true)
-            {
-                Console.WriteLine("Would you like to purchase this car?");
-                string userChoice = Console.ReadLine();
+                // input = ValidateUserString();
+                while ((input != "yes") && (input != "y") && (input != "no") && (input != "n"))
+                {
+                    Console.WriteLine("Please either input yes or no.");
+                    input = ValidatePurchaseCar();
+                }
 
-                if (userChoice == "no")
-                {
-                    return false;
-                }
-                else if (userChoice == "yes")
-                {
-                    return false;
-                }
-                else
-                {
-                    Console.WriteLine("That is an invalid response.");
-                    return true;
-                }
-            }
+                return input;
+
+
+                // if (userChoice == "no")
+                //{
+                //    return false;
+                //}
+                //else if (userChoice == "yes")
+                //{
+                //    return false;
+                //}
+                //else
+                //{
+                //    Console.WriteLine("That is an invalid response.");
+                //    return true;
+                //}
+           
 
         }
     }
